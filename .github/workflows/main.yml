@@ -1,0 +1,49 @@
+name: EMO Energy CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: |          
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Backend Tests (Placeholder)
+        working-directory: backend
+        run: echo "Backend tests not implemented. Add pytest or similar."
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Run Frontend Tests (Placeholder)
+        working-directory: frontend
+        run: echo "Frontend tests not implemented. Add Jest or similar."
+
+      - name: Lint frontend code
+        working-directory: frontend
+        run: npm run build #Add eslint config and script
